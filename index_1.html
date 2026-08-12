@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bayu Sulistyo — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1F1A;
+    --ink-soft:#4A4F3D;
+    --paper:#F2EEDF;
+    --paper-dim:#E7E1CC;
+    --gold:#C9A227;
+    --chili:#8B3A2F;
+    --line: rgba(242,238,223,0.18);
+    --line-dark: rgba(27,31,26,0.15);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+  ::selection{background:var(--gold); color:var(--ink);}
+
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,31,26,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{font-family:'Fraunces', serif; font-weight:600; font-size:19px;}
+  .brand span{color:var(--gold);}
+  .navlinks{display:flex; gap:28px; font-size:13px; font-family:'IBM Plex Mono', monospace;}
+  .navlinks a{text-decoration:none; opacity:0.75; transition:opacity .2s;}
+  .navlinks a:hover{opacity:1;}
+  .navlinks a:focus-visible, a:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  /* HERO */
+  header.hero{
+    padding:96px 0 80px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:56px;
+    align-items:start;
+  }
+  .status-chip{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line); border-radius:999px;
+    padding:6px 14px; font-size:12px;
+    margin-bottom:28px;
+  }
+  .status-chip .dot{width:7px; height:7px; border-radius:50%; background:#7FA96B; box-shadow:0 0 0 3px rgba(127,169,107,0.2);}
+
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:clamp(44px, 6.5vw, 76px);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+  }
+  h1.name em{font-style:italic; color:var(--gold); font-weight:400;}
+  .role-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:16px;
+    margin-top:18px;
+    color:var(--paper);
+    opacity:0.85;
+  }
+  .role-line .sep{color:var(--chili); margin:0 8px;}
+  .lede{
+    margin-top:22px;
+    font-size:16px;
+    line-height:1.65;
+    max-width:46ch;
+    color:var(--paper);
+    opacity:0.82;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:13px 22px;
+    border-radius:2px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary{background:var(--gold); color:var(--ink); font-weight:600;}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--gold); color:var(--gold);}
+
+  /* RECEIPT (signature element) */
+  .receipt{
+    background:var(--paper);
+    color:var(--ink);
+    padding:28px 26px 22px;
+    position:relative;
+    font-family:'IBM Plex Mono', monospace;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);
+    transform:rotate(1.2deg);
+  }
+  .receipt::before, .receipt::after{
+    content:"";
+    position:absolute; left:0; right:0; height:12px;
+    background-image: radial-gradient(circle at 8px 6px, var(--ink) 6px, transparent 7px);
+    background-size:16px 12px; background-repeat:repeat-x;
+  }
+  .receipt::before{ top:-6px; }
+  .receipt::after{ bottom:-6px; transform:rotate(180deg); }
+  .receipt h3{
+    font-family:'Fraunces', serif; font-weight:700; font-size:20px;
+    text-align:center; letter-spacing:0.02em;
+  }
+  .receipt .sub{text-align:center; font-size:11px; opacity:0.65; margin-top:4px;}
+  .receipt hr{border:none; border-top:1px dashed var(--line-dark); margin:16px 0;}
+  .receipt-row{display:flex; justify-content:space-between; font-size:12.5px; padding:5px 0; gap:12px;}
+  .receipt-row .k{opacity:0.65;}
+  .receipt-total{display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-top:6px; padding-top:10px; border-top:1px solid var(--line-dark);}
+  .stamp{
+    position:absolute; right:18px; bottom:34px;
+    border:2.5px solid var(--chili); color:var(--chili);
+    border-radius:6px; padding:5px 10px;
+    font-size:11px; font-weight:600; letter-spacing:0.1em;
+    transform:rotate(-9deg);
+    opacity:0.85;
+  }
+
+  section{padding:88px 0; border-top:1px solid var(--line);}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:44px; flex-wrap:wrap; gap:12px;}
+  h2.title{font-family:'Fraunces', serif; font-weight:600; font-size:clamp(28px,4vw,38px);}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  .about-grid p{font-size:16px; line-height:1.75; opacity:0.85; max-width:52ch;}
+  .about-grid p + p{margin-top:16px;}
+  .fact-list{display:flex; flex-direction:column; gap:0;}
+  .fact{display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--line); font-size:14px;}
+  .fact .k{font-family:'IBM Plex Mono', monospace; opacity:0.6;}
+  .fact .v{text-align:right;}
+
+  /* SKILLS — stock board */
+  .board{
+    border:1px solid var(--line);
+    background:rgba(242,238,223,0.03);
+  }
+  .board-row{
+    display:grid;
+    grid-template-columns: 1.4fr 2.4fr 0.7fr;
+    gap:18px;
+    padding:16px 22px;
+    border-bottom:1px solid var(--line);
+    align-items:center;
+  }
+  .board-row:last-child{border-bottom:none;}
+  .board-row .cat{font-family:'Fraunces', serif; font-size:16px; font-weight:600; color:var(--gold);}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    border:1px solid var(--line); padding:5px 10px; border-radius:2px;
+    opacity:0.9;
+  }
+  .board-row .lvl{font-family:'IBM Plex Mono', monospace; font-size:12px; text-align:right; opacity:0.5;}
+
+  /* PROJECT RECEIPT — full width */
+  .project-receipt{
+    background:var(--paper); color:var(--ink);
+    padding:44px 40px 36px;
+    position:relative;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);
+  }
+  .project-receipt::before, .project-receipt::after{
+    content:"";
+    position:absolute; left:0; right:0; height:14px;
+    background-image: radial-gradient(circle at 9px 7px, var(--ink) 7px, transparent 8px);
+    background-size:18px 14px; background-repeat:repeat-x;
+  }
+  .project-receipt::before{ top:-7px; }
+  .project-receipt::after{ bottom:-7px; transform:rotate(180deg); }
+  .pr-head{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px;}
+  .pr-head h3{font-family:'Fraunces', serif; font-weight:700; font-size:26px; max-width:60%;}
+  .pr-date{font-family:'IBM Plex Mono', monospace; font-size:12px; opacity:0.6; text-align:right;}
+  .pr-desc{margin-top:14px; font-size:15px; line-height:1.7; max-width:60ch; opacity:0.85;}
+  .pr-items{margin-top:24px; font-family:'IBM Plex Mono', monospace; font-size:13px;}
+  .pr-item{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed var(--line-dark);}
+  .pr-item .qty{opacity:0.5; margin-right:10px;}
+  .pr-foot{display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:16px; border-top:1px solid var(--line-dark);}
+  .pr-link{font-family:'IBM Plex Mono', monospace; font-size:13px; text-decoration:underline; color:var(--chili);}
+
+  /* TIMELINE (education/certs — real chronology, numbering justified) */
+  .timeline{display:flex; flex-direction:column;}
+  .t-row{display:grid; grid-template-columns:70px 1fr; gap:22px; padding:22px 0; border-bottom:1px solid var(--line);}
+  .t-row:last-child{border-bottom:none;}
+  .t-num{font-family:'Fraunces', serif; font-size:28px; color:var(--gold); opacity:0.5;}
+  .t-year{font-family:'IBM Plex Mono', monospace; font-size:12px; opacity:0.55; margin-bottom:4px;}
+  .t-title{font-family:'Fraunces', serif; font-size:19px; font-weight:600;}
+  .t-sub{font-size:14px; opacity:0.7; margin-top:3px;}
+
+  /* CONTACT / FOOTER */
+  footer{padding:90px 0 60px; border-top:1px solid var(--line);}
+  .contact-receipt{
+    background:var(--paper); color:var(--ink);
+    padding:40px 36px; text-align:center;
+    position:relative;
+  }
+  .contact-receipt::before{
+    content:"";
+    position:absolute; top:-7px; left:0; right:0; height:14px;
+    background-image: radial-gradient(circle at 9px 7px, var(--ink) 7px, transparent 8px);
+    background-size:18px 14px; background-repeat:repeat-x;
+  }
+  .contact-receipt h3{font-family:'Fraunces', serif; font-size:30px; font-weight:700;}
+  .contact-receipt p{margin-top:10px; opacity:0.7; font-size:14px;}
+  .contact-links{display:flex; justify-content:center; gap:16px; margin-top:26px; flex-wrap:wrap;}
+  .contact-links a{
+    font-family:'IBM Plex Mono', monospace; font-size:13px;
+    border:1px solid var(--line-dark); padding:11px 18px;
+    text-decoration:none; color:var(--ink);
+  }
+  .contact-links a:hover{background:var(--ink); color:var(--paper);}
+  .copyright{text-align:center; margin-top:40px; font-size:12px; opacity:0.4; font-family:'IBM Plex Mono', monospace;}
+
+  @media (max-width: 860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .board-row{grid-template-columns:1fr; gap:8px;}
+    .board-row .lvl{text-align:left;}
+    .navlinks{display:none;}
+    .receipt{transform:none;}
+    .pr-head h3{max-width:100%;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Bayu<span>.</span>Sulistyo</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#project">Project</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="status-chip"><span class="dot"></span> Open to junior web developer roles</div>
+      <h1 class="name">Bayu<br>Sulis<em>tyo</em></h1>
+      <div class="role-line">Web Developer <span class="sep">/</span> PHP · MySQL <span class="sep">/</span> Jakarta, ID</div>
+      <p class="lede">Fresh Information Systems graduate who builds ordering and e-commerce systems end to end — from database schema to a working checkout flow. Most recently shipped a full online store for a grocery retailer in Aceh.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:Bayusulistyo1797@gmail.com">Hire me — send email</a>
+        <a class="btn btn-ghost" href="https://github.com/bayusulll" target="_blank" rel="noopener">View GitHub</a>
+      </div>
+    </div>
+
+    <div class="receipt">
+      <h3>TOKO CODE</h3>
+      <div class="sub">DEVELOPER RECEIPT NO. 001</div>
+      <hr>
+      <div class="receipt-row"><span class="k">Name</span><span>Bayu Sulistyo</span></div>
+      <div class="receipt-row"><span class="k">Role</span><span>Web Developer</span></div>
+      <div class="receipt-row"><span class="k">Based in</span><span>Jakarta Pusat</span></div>
+      <div class="receipt-row"><span class="k">Degree</span><span>S.Kom — GPA 3.10</span></div>
+      <hr>
+      <div class="receipt-row"><span class="k">HTML / CSS / JS</span><span>✓</span></div>
+      <div class="receipt-row"><span class="k">PHP / MySQL</span><span>✓</span></div>
+      <div class="receipt-row"><span class="k">UI/UX (Figma)</span><span>✓</span></div>
+      <div class="receipt-row"><span class="k">SDLC</span><span>✓</span></div>
+      <div class="receipt-total"><span>Ready to start</span><span>ASAP</span></div>
+      <div class="stamp">HIRE ME</div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">01 — About</div>
+        <h2 class="title">Builds the whole shelf, not just the label</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I graduated in Information Systems from Gunadarma University with a focus on turning small, real businesses online. My thesis project took a neighborhood grocery store (Toko Sembako Aceh) from paper order books to a working PHP and MySQL storefront — planning, database design, build, testing, and handover, following the SDLC process throughout.</p>
+        <p>I like the parts of web development that most portfolios skip: schema design, form validation, and the unglamorous testing pass before something goes live. I'm comfortable working solo across the stack, and I'm looking for a team where I can keep doing that at a larger scale.</p>
+      </div>
+      <div class="fact-list">
+        <div class="fact"><span class="k">Location</span><span class="v">Bendungan Hilir, Jakarta Pusat</span></div>
+        <div class="fact"><span class="k">Email</span><span class="v">Bayusulistyo1797@gmail.com</span></div>
+        <div class="fact"><span class="k">Phone</span><span class="v">0858-8217-0170</span></div>
+        <div class="fact"><span class="k">GitHub</span><span class="v">github.com/bayusulll</span></div>
+        <div class="fact"><span class="k">Languages</span><span class="v">Indonesian (native), English (basic working)</span></div>
+        <div class="fact"><span class="k">Availability</span><span class="v">Immediate</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">02 — Stock list</div>
+        <h2 class="title">What's on the shelf</h2>
+      </div>
+    </div>
+    <div class="board">
+      <div class="board-row">
+        <div class="cat">Programming &amp; Web</div>
+        <div class="chips">
+          <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">MySQL</span>
+        </div>
+        <div class="lvl">core</div>
+      </div>
+      <div class="board-row">
+        <div class="cat">Tools</div>
+        <div class="chips">
+          <span class="chip">Git</span><span class="chip">VS Code</span><span class="chip">Figma</span><span class="chip">Canva</span><span class="chip">Microsoft Word</span>
+        </div>
+        <div class="lvl">daily</div>
+      </div>
+      <div class="board-row">
+        <div class="cat">Practice</div>
+        <div class="chips">
+          <span class="chip">UI / UX Design</span><span class="chip">SDLC</span><span class="chip">Database Design</span>
+        </div>
+        <div class="lvl">applied</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">03 — Featured build</div>
+        <h2 class="title">One receipt, start to finish</h2>
+      </div>
+    </div>
+    <div class="project-receipt">
+      <div class="pr-head">
+        <h3>Toko Sembako Aceh — Online Ordering Website</h3>
+        <div class="pr-date">FEB 2025<br>SCIENTIFIC WRITING PROJECT</div>
+      </div>
+      <p class="pr-desc">An online ordering system for an Aceh-based grocery retailer, built solo from planning to implementation. The project covers the full SDLC: requirements, design, development, testing, and handover — with a database structured around real inventory and order data.</p>
+      <div class="pr-items">
+        <div class="pr-item"><span><span class="qty">1x</span>Requirements &amp; planning</span><span>Done</span></div>
+        <div class="pr-item"><span><span class="qty">1x</span>Database schema (MySQL)</span><span>Done</span></div>
+        <div class="pr-item"><span><span class="qty">1x</span>Storefront &amp; checkout (PHP)</span><span>Done</span></div>
+        <div class="pr-item"><span><span class="qty">1x</span>Testing &amp; QA pass</span><span>Done</span></div>
+        <div class="pr-item"><span><span class="qty">1x</span>Handover &amp; documentation</span><span>Done</span></div>
+      </div>
+      <div class="pr-foot">
+        <span class="mono" style="font-size:13px; opacity:0.6;">Stack: PHP · MySQL · HTML/CSS/JS</span>
+        <a class="pr-link" href="https://github.com/bayusulll" target="_blank" rel="noopener">See code on GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="background">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">04 — Timeline</div>
+        <h2 class="title">Education &amp; certifications</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="t-row">
+        <div class="t-num">01</div>
+        <div>
+          <div class="t-year">2019 — 2025</div>
+          <div class="t-title">S.Kom, Sistem Informasi — Gunadarma University</div>
+          <div class="t-sub">Depok, Jawa Barat · GPA 3.10 · Thesis: PHP/MySQL e-commerce site for Toko Sembako Aceh</div>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-num">02</div>
+        <div>
+          <div class="t-year">2019</div>
+          <div class="t-title">SMAN 7 Jakarta — IPS</div>
+          <div class="t-sub">Jakarta Pusat</div>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-num">03</div>
+        <div>
+          <div class="t-year">May 2025</div>
+          <div class="t-title">Network Design and Configuration Using Switch Device</div>
+          <div class="t-sub">Certification</div>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-num">04</div>
+        <div>
+          <div class="t-year">June 2024</div>
+          <div class="t-title">Introducing Wireless LAN</div>
+          <div class="t-sub">Certification</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-receipt">
+      <div class="eyebrow" style="color:var(--chili);">Ready when you are</div>
+      <h3>Let's build the next one.</h3>
+      <p>Open to junior web developer, PHP developer, and web development intern roles — remote or Jakarta-based.</p>
+      <div class="contact-links">
+        <a href="mailto:Bayusulistyo1797@gmail.com">Bayusulistyo1797@gmail.com</a>
+        <a href="tel:085882170170">0858-8217-0170</a>
+        <a href="https://github.com/bayusulll" target="_blank" rel="noopener">github.com/bayusulll</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Bayu Sulistyo. Built with HTML, CSS &amp; a little market logic.</div>
+  </div>
+</footer>
+
+</body>
+</html>
